@@ -165,7 +165,7 @@ const translations = {
         },
         career: {
             label: 'Únete al Equipo',
-            title: 'Trabaja con<br>Bada Edifica',
+            title: 'Trabajo con<br>nosotros',
             desc: 'Somos una empresa en crecimiento buscando talento en construcción, electricidad, fontanería y más.',
             email: 'hr@badaedifica.com',
             cta: 'Enviar Currículum'
@@ -188,15 +188,15 @@ const translations = {
             ctaBtn: 'Enviar Currículum'
         },
         footer: {
-            desc: 'Soluciones profesionales de construcción en Barcelona. Un equipo, todos los oficios.',
+            desc: 'Expertos en construcción, reformas y edificación en toda España. Un solo equipo multidisciplinar para gestionar tu proyecto de principio a fin.',
             services: 'Servicios',
             company: 'Empresa',
             contact: 'Contacto',
             email: 'info@badaedifica.com',
             phone: '+34 935 593 581',
             website: 'badaedifica.com',
-            location: 'Carrer Alcalde Martínez Ecija 33<br>08917 Badalona<br>Barcelona, Catalonia<br>Spain',
-            copyright: '© 2023-2025 Bada Edifica. Todos los derechos reservados.',
+            location: 'Carrer Alcalde Martínez Ecija 33, 08917 Badalona<br>Catalunya, España',
+            copyright: '© 2023-2026 Bada Edifica. Todos los derechos reservados.',
             est: 'Fundada en 2023 · España',
             electrical: 'Electricidad',
             plumbing: 'Fontanería',
@@ -210,7 +210,7 @@ const translations = {
         pageHeader: {
             career: {
                 label: 'Carreras',
-                title: 'Trabaja con<br>Bada Edifica',
+                title: 'Trabajo con<br>nosotros',
                 desc: 'Únete a un equipo apasionado por la construcción de calidad en Barcelona.'
             },
             about: {
@@ -257,7 +257,7 @@ const translations = {
             emailLabel: 'Correo Electrónico',
             emailValue: 'info@badaedifica.com',
             locationLabel: 'Ubicación',
-            locationValue: 'Carrer Alcalde Martínez Ecija 33<br>08917 Badalona<br>Barcelona, Catalonia<br>Spain',
+            locationValue: 'Carrer Alcalde Martínez Ecija 33, 08917 Badalona<br>Catalunya, España',
             hoursLabel: 'Horario',
             phoneLabel: 'Teléfono',
             whatsapp: 'WhatsApp',
@@ -287,7 +287,7 @@ const translations = {
             electricalUpgrade: 'Cuadros Eléctricos',
             electricalUpgradeDesc: 'Actualización de cuadros',
             construction: 'Construcción',
-            constructionDesc: 'Obras nuevas, acondicionamientos',
+            constructionDesc: 'Obras nuevas, Reformas General',
             renovation: 'Reformas',
             renovationDesc: 'Remodelaciones y reformas',
             fire: 'Seguridad Contra Incendios',
@@ -464,7 +464,7 @@ const translations = {
         },
         career: {
             label: 'Join the Team',
-            title: 'Work with<br>Bada Edifica',
+            title: 'Work with<br>us',
             desc: 'We are a growing company looking for talent in construction, electrical, plumbing and more.',
             email: 'hr@badaedifica.com',
             cta: 'Send Resume'
@@ -487,15 +487,15 @@ const translations = {
             ctaBtn: 'Send Resume'
         },
         footer: {
-            desc: 'Professional building solutions in Barcelona. One team, all trades.',
+            desc: 'Experts in construction, renovation and building across Spain. A single multidisciplinary team managing your project from start to finish.',
             services: 'Services',
             company: 'Company',
             contact: 'Contact',
             email: 'info@badaedifica.com',
             phone: '+34 935 593 581',
             website: 'badaedifica.com',
-            location: 'Carrer Alcalde Martínez Ecija 33<br>08917 Badalona<br>Barcelona, Catalonia<br>Spain',
-            copyright: '© 2023-2025 Bada Edifica. All rights reserved.',
+            location: 'Carrer Alcalde Martínez Ecija 33, 08917 Badalona<br>Catalunya, España',
+            copyright: '© 2023-2026 Bada Edifica. All rights reserved.',
             est: 'Est. 2023 · Spain',
             electrical: 'Electrical',
             plumbing: 'Plumbing',
@@ -509,7 +509,7 @@ const translations = {
         pageHeader: {
             career: {
                 label: 'Careers',
-                title: 'Work with<br>Bada Edifica',
+                title: 'Work with<br>us',
                 desc: 'Join a team passionate about quality construction in Barcelona.'
             },
             about: {
@@ -556,7 +556,7 @@ const translations = {
             emailLabel: 'Email',
             emailValue: 'info@badaedifica.com',
             locationLabel: 'Location',
-            locationValue: 'Carrer Alcalde Martínez Ecija 33<br>08917 Badalona<br>Barcelona, Catalonia<br>Spain',
+            locationValue: 'Carrer Alcalde Martínez Ecija 33, 08917 Badalona<br>Catalunya, España',
             hoursLabel: 'Hours',
             phoneLabel: 'Phone',
             whatsapp: 'WhatsApp',
@@ -586,7 +586,7 @@ const translations = {
             electricalUpgrade: 'Electrical Panels',
             electricalUpgradeDesc: 'Panel upgrades',
             construction: 'Construction',
-            constructionDesc: 'New builds, fit-outs',
+            constructionDesc: 'New builds, General Renovations',
             renovation: 'Renovations',
             renovationDesc: 'Remodels and refurbishments',
             fire: 'Fire Safety',

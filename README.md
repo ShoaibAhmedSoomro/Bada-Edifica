@@ -1,6 +1,6 @@
 # Bada Edifica
 
-Soluciones profesionales de construcción en Barcelona. Un equipo, todos los oficios.
+Expertos en construcción, reformas y edificación en toda España. Un solo equipo multidisciplinar para gestionar tu proyecto de principio a fin.
 
 ## Descripción
 
