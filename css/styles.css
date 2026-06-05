@@ -845,20 +845,34 @@ button {
 }
 
 
-/* ── Nav drawer wrapper — transparent on desktop ── */
-.nav-drawer {
-    display: contents;
-}
 
-.drawer-header,
-.drawer-footer {
+/* ============================================
+   MOBILE NAVIGATION — Body-level right-side drawer
+   nav-drawer & nav-backdrop are OUTSIDE <nav>, so
+   backdrop-filter on .nav is irrelevant (no containing-block issue).
+   Breakpoint: <= 1023px
+============================================ */
+
+/* Desktop: drawer elements hidden, backdrop hidden */
+.nav-backdrop,
+.nav-drawer {
     display: none;
 }
 
-/* ============================================
-   MOBILE NAVIGATION — Right-side modal drawer
-   Breakpoint: ≤ 1023px
-============================================ */
+.drawer-header,
+.drawer-footer,
+.drawer-links,
+.drawer-brand,
+.drawer-logo-img,
+.drawer-close,
+.drawer-phone,
+.drawer-cta,
+.drawer-sub-btn,
+.drawer-sub,
+.drawer-has-sub {
+    display: none;
+}
+
 @media (max-width: 1023px) {
 
     /* ── Nav bar ── */
@@ -874,10 +888,17 @@ button {
         height: 36px;
     }
 
+    /* Hide desktop nav links on mobile */
+    .nav-links {
+        display: none !important;
+    }
+
+    /* Hide CTA in nav bar on mobile */
     .nav-cta {
         display: none;
     }
 
+    /* Show hamburger */
     .menu-toggle {
         display: flex;
         width: 44px;
@@ -886,18 +907,16 @@ button {
         justify-content: center;
     }
 
-    /* ── Backdrop ── */
+    /* ── Full-screen backdrop ── */
     .nav-backdrop {
+        display: block;
         position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 997;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        z-index: 1098;
         opacity: 0;
         visibility: hidden;
-        transition: opacity 0.35s ease, visibility 0.35s ease;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
     .nav-backdrop.active {
@@ -918,8 +937,8 @@ button {
         background-color: var(--color-canvas);
         transform: translateX(100%);
         transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 999;
-        box-shadow: -6px 0 40px rgba(0, 0, 0, 0.18);
+        z-index: 1099;
+        box-shadow: -8px 0 48px rgba(0, 0, 0, 0.22);
         overflow: hidden;
     }
 
@@ -927,7 +946,7 @@ button {
         transform: translateX(0);
     }
 
-    /* ── Drawer header: logo + close button ── */
+    /* ── Drawer header ── */
     .drawer-header {
         display: flex;
         align-items: center;
@@ -935,7 +954,7 @@ button {
         padding: 0 12px 0 20px;
         height: 60px;
         min-height: 60px;
-        border-bottom: 1px solid var(--color-hairline);
+        border-bottom: 2px solid var(--color-hairline);
         flex-shrink: 0;
         background-color: var(--color-canvas);
     }
@@ -968,226 +987,162 @@ button {
         color: var(--color-primary);
     }
 
-    /* ── Nav links: scrollable middle area ── */
-    .nav-links {
-        position: static;
-        top: auto;
-        left: auto;
-        right: auto;
-        bottom: auto;
-        width: 100%;
-        height: auto;
-        display: flex;
-        flex-direction: column;
+    /* ── Mobile nav links list (scrollable middle) ── */
+    .drawer-links {
+        display: block;
         flex: 1;
-        gap: 0;
-        padding: 0;
-        background: transparent;
-        transform: none;
-        transition: none;
         overflow-y: auto;
         overflow-x: hidden;
         -webkit-overflow-scrolling: touch;
-        z-index: auto;
-        align-items: stretch;
+        list-style: none;
+        padding: 0;
+        margin: 0;
     }
 
-    .nav-links.active {
-        transform: none;
-    }
-
-    /* ── Nav items ── */
-    .nav-links li {
-        height: auto;
-        display: block;
-        width: 100%;
-        flex-shrink: 0;
+    .drawer-links > li {
         border-bottom: 1px solid var(--color-hairline);
     }
 
-    .nav-links li:last-child {
+    .drawer-links > li:last-child {
         border-bottom: none;
     }
 
-    /* ── Nav link text ── */
-    .nav-links a {
+    /* Regular links */
+    .drawer-links > li > a {
         display: flex;
         align-items: center;
         width: 100%;
-        padding: 13px 20px;
-        min-height: 50px;
-        font-size: 15px !important;
+        padding: 14px 20px;
+        min-height: 52px;
+        font-size: 16px;
         font-weight: 600;
         color: var(--color-charcoal);
-        letter-spacing: 0.01em;
-        text-transform: none !important;
-        font-family: var(--font-primary) !important;
+        font-family: var(--font-primary);
+        text-transform: none;
+        letter-spacing: 0;
+        text-decoration: none;
     }
 
-    .nav-links a::after {
-        display: none;
-    }
-
-    .nav-links a.active {
+    .drawer-links > li > a:hover {
         color: var(--color-primary);
-        background-color: rgba(255, 0, 0, 0.04);
+        background-color: rgba(255, 0, 0, 0.03);
+    }
+
+    /* Active page link */
+    .drawer-links > li > a.active {
+        color: var(--color-primary);
+        background-color: rgba(255, 0, 0, 0.05);
         border-left: 3px solid var(--color-primary);
         padding-left: 17px;
     }
 
-    /* ── Servicios mega-link row ── */
-    .has-mega {
-        position: relative;
+    /* ── Servicios accordion row ── */
+    .drawer-has-sub {
         display: block;
     }
 
-    .mega-link {
+    .drawer-sub-btn {
         display: flex;
         align-items: center;
         justify-content: space-between;
         width: 100%;
-        padding: 13px 20px;
-        min-height: 50px;
-        font-size: 15px !important;
+        padding: 14px 20px;
+        min-height: 52px;
+        font-size: 16px;
         font-weight: 600;
         color: var(--color-charcoal);
-        letter-spacing: 0.01em;
-        text-transform: none !important;
-        font-family: var(--font-primary) !important;
+        font-family: var(--font-primary);
+        text-transform: none;
+        letter-spacing: 0;
+        background: none;
+        border: none;
         cursor: pointer;
+        text-align: left;
     }
 
-    .mega-link::after {
-        display: none;
+    .drawer-sub-btn:hover {
+        color: var(--color-primary);
+        background-color: rgba(255, 0, 0, 0.03);
     }
 
-    .has-mega .mega-link svg {
-        transition: transform 0.25s ease;
+    .drawer-sub-btn svg {
         flex-shrink: 0;
-        margin-left: 6px;
+        margin-left: 8px;
+        transition: transform 0.25s ease;
     }
 
-    .has-mega.active .mega-link svg {
+    .drawer-has-sub.open > .drawer-sub-btn {
+        color: var(--color-primary);
+    }
+
+    .drawer-has-sub.open > .drawer-sub-btn svg {
         transform: rotate(180deg);
     }
 
-    /* ── Mobile mega submenu ── */
-    .mega-menu {
-        position: static;
-        top: auto;
-        opacity: 1;
-        visibility: visible;
-        transform: none;
+    /* ── Services submenu ── */
+    .drawer-sub {
         display: none;
-        background-color: #f5f5f5;
-        border: none;
-        border-radius: 0;
-        box-shadow: none;
+        list-style: none;
         padding: 0;
-        border-top: 2px solid var(--color-primary);
-        border-bottom: 1px solid var(--color-hairline);
-    }
-
-    .has-mega.active .mega-menu {
-        display: block;
-    }
-
-    .has-mega:hover .mega-menu {
-        display: none;
-    }
-
-    .has-mega.active:hover .mega-menu {
-        display: block;
-    }
-
-    .mega-inner {
-        display: block;
-        padding: 0;
-    }
-
-    .mega-section {
-        padding: 10px 20px 10px 28px;
-        border-bottom: 1px solid var(--color-hairline);
-    }
-
-    .mega-section:last-of-type {
-        border-bottom: none;
-    }
-
-    .mega-section-head {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin-bottom: 5px;
-        padding-bottom: 0;
-        border-bottom: none;
-    }
-
-    .mega-section-head svg {
-        width: 12px;
-        height: 12px;
-        flex-shrink: 0;
-    }
-
-    .mega-section-head h4 {
-        font-size: 10px !important;
-        letter-spacing: 0.12em;
-        text-transform: uppercase !important;
-        color: var(--color-primary);
-        font-weight: 700;
-        font-family: var(--font-primary) !important;
-    }
-
-    .mega-section a {
-        display: flex;
-        align-items: center;
-        padding: 6px 0;
         margin: 0;
-        min-height: 34px;
-        border-radius: 0;
-        background: transparent;
-        transform: none !important;
+        background-color: var(--color-surface-soft);
+        border-top: 2px solid var(--color-primary);
     }
 
-    .mega-section a:hover {
-        background: transparent;
-        transform: none !important;
+    .drawer-has-sub.open > .drawer-sub {
+        display: block;
     }
 
-    .mega-title {
-        font-size: 13px;
-        font-weight: 600;
+    .drawer-sub > li {
+        border-bottom: 1px solid var(--color-hairline);
+    }
+
+    .drawer-sub > li:last-child {
+        border-bottom: none;
+    }
+
+    .drawer-sub > li > a {
+        display: block;
+        padding: 11px 20px 11px 32px;
+        font-size: 14px;
+        font-weight: 500;
         color: var(--color-charcoal);
+        font-family: var(--font-primary);
         text-transform: none;
-        letter-spacing: 0;
-        font-family: var(--font-primary) !important;
+        text-decoration: none;
+        min-height: 40px;
+        line-height: 1.4;
     }
 
-    .mega-desc {
-        display: none;
+    .drawer-sub > li > a:hover {
+        color: var(--color-primary);
+        background-color: rgba(255, 0, 0, 0.03);
     }
 
-    .mega-cta,
-    .mega-view-all {
-        display: none;
+    .drawer-view-all {
+        color: var(--color-primary) !important;
+        font-weight: 700 !important;
+        padding-left: 32px !important;
     }
 
-    /* ── Drawer footer: CTA + phone ── */
+    /* ── Drawer footer ── */
     .drawer-footer {
         display: flex;
         flex-direction: column;
         gap: 10px;
         padding: 16px 20px;
-        border-top: 1px solid var(--color-hairline);
+        border-top: 2px solid var(--color-hairline);
         flex-shrink: 0;
         background-color: var(--color-canvas);
     }
 
     .drawer-cta {
+        display: flex;
         width: 100%;
         justify-content: center;
         min-height: 46px;
         font-size: 14px !important;
+        letter-spacing: 0.06em;
     }
 
     .drawer-phone {
@@ -1195,11 +1150,11 @@ button {
         align-items: center;
         justify-content: center;
         gap: 8px;
-        font-size: 13px;
+        font-size: 14px;
         font-weight: 600;
         color: var(--color-mute);
         text-decoration: none;
-        padding: 4px 0;
+        padding: 6px 0;
         font-family: var(--font-primary);
     }
 
@@ -4236,65 +4191,40 @@ footer svg {
 }
 
 /* ============================================
-   MOBILE NAV — Final-priority overrides
-   (Must come after typography layer to win cascade)
+   MOBILE DRAWER — Final-priority typography overrides
+   Beat typography layer (Oswald uppercase 13px) for drawer links
 ============================================ */
 @media (max-width: 1023px) {
-    /* Drawer nav links: readable Inter, not 13px uppercase Oswald */
-    .nav-drawer .nav-links a,
-    .nav-drawer .mega-link,
-    .nav-links a,
-    .nav-links .mega-link {
-        font-size: 15px !important;
-        text-transform: none !important;
-        letter-spacing: 0.01em !important;
+    /* Drawer main links: Inter, 16px, normal case */
+    .drawer-links a,
+    .drawer-sub-btn,
+    .drawer-links span {
         font-family: var(--font-primary) !important;
-        font-weight: 600 !important;
-    }
-
-    /* Submenu item titles */
-    .nav-drawer .mega-title,
-    .nav-links .mega-title {
-        font-size: 13px !important;
+        font-size: 16px !important;
         text-transform: none !important;
         letter-spacing: 0 !important;
-        font-family: var(--font-primary) !important;
         font-weight: 600 !important;
     }
 
-    /* Category section labels: keep small + uppercase */
-    .nav-drawer .mega-section-head h4,
-    .nav-links .mega-section-head h4 {
-        font-size: 10px !important;
-        text-transform: uppercase !important;
-        letter-spacing: 0.12em !important;
+    /* Submenu links: slightly smaller */
+    .drawer-sub a {
         font-family: var(--font-primary) !important;
+        font-size: 14px !important;
+        text-transform: none !important;
+        letter-spacing: 0 !important;
+        font-weight: 500 !important;
     }
 
-    /* Drawer footer CTA button */
+    /* Drawer footer CTA */
     .drawer-cta {
         font-size: 14px !important;
         letter-spacing: 0.06em !important;
     }
 
-    /* Drawer phone number */
+    /* Drawer phone */
     .drawer-phone {
-        font-size: 13px !important;
+        font-size: 14px !important;
         font-family: var(--font-primary) !important;
         text-transform: none !important;
-    }
-
-    /* ── CRITICAL: Remove backdrop-filter from .nav on mobile ──
-       backdrop-filter turns .nav into a "containing block" for
-       position:fixed descendants (CSS spec). Without this fix,
-       .nav-drawer and .nav-backdrop are constrained to the 60px
-       nav bar instead of the full viewport, making the drawer invisible.
-       These !important rules beat the glass-morphism layer later in the file. ── */
-    .nav,
-    .nav.scrolled {
-        backdrop-filter: none !important;
-        -webkit-backdrop-filter: none !important;
-        background-color: rgba(255, 255, 255, 0.97) !important;
-        border-bottom: 1px solid var(--color-hairline) !important;
     }
 }

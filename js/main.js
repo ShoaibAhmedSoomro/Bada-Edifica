@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     initMobileMenu();
+    initDrawerSubmenu();
+    initDrawerActiveLinks();
     initScrollAnimations();
     initSectionReveal();
     initCounterAnimation();
@@ -16,12 +18,14 @@ document.addEventListener('DOMContentLoaded', () => {
     initCardTilt();
 });
 
-/* ── Mobile Menu (right-side drawer) ── */
+/* ── Mobile Menu — body-level right-side drawer ──
+   #navDrawer and #navBackdrop are siblings of <nav> in the DOM,
+   so backdrop-filter on .nav cannot create a containing block for them. */
 function initMobileMenu() {
-    const menuToggle = document.getElementById('menuToggle');
-    const navDrawer  = document.getElementById('navDrawer');
+    const menuToggle  = document.getElementById('menuToggle');
+    const navDrawer   = document.getElementById('navDrawer');
     const drawerClose = document.getElementById('drawerClose');
-    const backdrop   = document.getElementById('navBackdrop');
+    const backdrop    = document.getElementById('navBackdrop');
 
     if (!menuToggle || !navDrawer) return;
 
@@ -53,30 +57,53 @@ function initMobileMenu() {
     }
 
     menuToggle.addEventListener('click', () => {
-        if (navDrawer.classList.contains('active')) {
-            closeMenu();
-        } else {
-            openMenu();
-        }
+        navDrawer.classList.contains('active') ? closeMenu() : openMenu();
     });
 
-    // Close button inside the drawer
-    if (drawerClose) {
-        drawerClose.addEventListener('click', closeMenu);
-    }
+    if (drawerClose) drawerClose.addEventListener('click', closeMenu);
+    if (backdrop)    backdrop.addEventListener('click', closeMenu);
 
-    // Backdrop click closes the drawer
-    if (backdrop) {
-        backdrop.addEventListener('click', closeMenu);
-    }
+    // Close drawer when any drawer link (not submenu toggle) is tapped
+    navDrawer.querySelectorAll('.drawer-links a').forEach(link => {
+        link.addEventListener('click', closeMenu);
+    });
+}
 
-    // Close when any nav link (non-mega) is tapped
-    const navLinks = document.getElementById('navLinks');
-    if (navLinks) {
-        navLinks.querySelectorAll('a:not(.mega-link)').forEach(link => {
-            link.addEventListener('click', closeMenu);
+/* ── Drawer Services sub-accordion ── */
+function initDrawerSubmenu() {
+    document.querySelectorAll('.drawer-sub-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const parent = btn.closest('.drawer-has-sub');
+            if (!parent) return;
+            const isOpen = parent.classList.contains('open');
+            // Close all other open sub-menus
+            document.querySelectorAll('.drawer-has-sub.open').forEach(el => {
+                el.classList.remove('open');
+                const b = el.querySelector('.drawer-sub-btn');
+                if (b) b.setAttribute('aria-expanded', 'false');
+            });
+            // Toggle this one
+            if (!isOpen) {
+                parent.classList.add('open');
+                btn.setAttribute('aria-expanded', 'true');
+            }
         });
-    }
+    });
+}
+
+/* ── Mark the active page link in the drawer ── */
+function initDrawerActiveLinks() {
+    const rawPath = window.location.pathname.replace(/\.html$/, '').replace(/\/$/, '');
+    const path    = rawPath === '' ? '/' : rawPath;
+
+    document.querySelectorAll('.drawer-links > li > a').forEach(link => {
+        const href     = (link.getAttribute('href') || '').split('#')[0].replace(/\/$/, '');
+        const normHref = href === '' ? '/' : href;
+        const match    = normHref === '/'
+            ? path === '/'
+            : path.endsWith('/' + normHref) || path === normHref;
+        if (match) link.classList.add('active');
+    });
 }
 
 /* ── Scroll Reveal Animations ── */
