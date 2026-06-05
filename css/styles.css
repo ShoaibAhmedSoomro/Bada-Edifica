@@ -844,98 +844,162 @@ button {
     height: 24px;
 }
 
-/* Mobile Nav */
+/* ============================================
+   MOBILE NAVIGATION — Complete fix
+   Breakpoint: ≤ 1023px
+============================================ */
 @media (max-width: 1023px) {
+
+    /* ── Nav bar ── */
     .nav {
         height: 60px;
     }
-    
+
     .nav.scrolled {
         height: 56px;
     }
-    
+
     .logo-img {
-        height: 44px;
+        height: 36px;
     }
-    
-    .menu-toggle {
-        display: flex;
-    }
-    
+
     .nav-cta {
         display: none;
     }
-    
+
+    .menu-toggle {
+        display: flex;
+        width: 44px;
+        height: 44px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* ── Backdrop overlay ── */
     .nav-backdrop {
         position: fixed;
-        top: 60px;
+        top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(0,0,0,0.5);
-        z-index: 998;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 997;
         opacity: 0;
         visibility: hidden;
-        transition: all 0.3s ease;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
     }
-    
+
     .nav-backdrop.active {
         opacity: 1;
         visibility: visible;
     }
-    
+
+    /* ── Nav drawer ── */
     .nav-links {
         position: fixed;
         top: 60px;
         left: 0;
         right: 0;
         bottom: 0;
+        display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
         gap: 0;
-        padding: var(--space-lg);
+        padding: 0;
         background-color: var(--color-canvas);
         transform: translateX(-100%);
-        transition: transform 0.3s ease;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
         z-index: 999;
     }
-    
+
     .nav-links.active {
         transform: translateX(0);
     }
-    
+
+    /* ── List items — CRITICAL: override desktop height: 100% ── */
     .nav-links li {
+        height: auto;
+        display: block;
         width: 100%;
+        flex-shrink: 0;
         border-bottom: 1px solid var(--color-hairline);
     }
-    
-    .nav-links a {
-        display: block;
-        padding: var(--space-md) 0;
-        font-size: var(--font-heading-md);
+
+    .nav-links li:last-child {
+        border-bottom: none;
     }
-    
-    /* Mobile Mega Menu */
+
+    /* ── Nav link text ── */
+    .nav-links a {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 14px 20px;
+        min-height: 52px;
+        font-size: 16px !important;
+        font-weight: 600;
+        color: var(--color-charcoal);
+        letter-spacing: 0.02em;
+        text-transform: none !important;
+    }
+
+    /* Hide desktop hover underline bar */
+    .nav-links a::after {
+        display: none;
+    }
+
+    /* Active page highlight */
+    .nav-links a.active {
+        color: var(--color-primary);
+        background-color: rgba(255, 0, 0, 0.04);
+        border-left: 3px solid var(--color-primary);
+        padding-left: 17px;
+    }
+
+    /* ── Servicios mega-link row ── */
     .has-mega {
         position: relative;
+        display: block;
     }
-    
+
+    .mega-link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 14px 20px;
+        min-height: 52px;
+        font-size: 16px !important;
+        font-weight: 600;
+        color: var(--color-charcoal);
+        letter-spacing: 0.02em;
+        text-transform: none !important;
+        cursor: pointer;
+    }
+
+    /* Remove CSS triangle — SVG chevron already in HTML */
     .mega-link::after {
-        content: '';
-        position: absolute;
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 0;
-        height: 0;
-        border-left: 5px solid transparent;
-        border-right: 5px solid transparent;
-        border-top: 5px solid currentColor;
+        display: none;
     }
-    
+
+    /* Rotate SVG chevron when submenu is open */
+    .has-mega .mega-link svg {
+        transition: transform 0.25s ease;
+        flex-shrink: 0;
+        margin-left: 8px;
+    }
+
+    .has-mega.active .mega-link svg {
+        transform: rotate(180deg);
+    }
+
+    /* ── Mobile mega submenu ── */
     .mega-menu {
         position: static;
+        top: auto;
         opacity: 1;
         visibility: visible;
         transform: none;
@@ -945,50 +1009,86 @@ button {
         border-radius: 0;
         box-shadow: none;
         padding: 0;
+        border-top: 2px solid var(--color-primary);
     }
-    
-    .has-mega:hover .mega-menu,
+
+    /* Open only via JS .active — NOT on hover (touch issue) */
     .has-mega.active .mega-menu {
         display: block;
     }
-    
+
+    .has-mega:hover .mega-menu {
+        display: none;
+    }
+
+    .has-mega.active:hover .mega-menu {
+        display: block;
+    }
+
+    /* ── Mega menu inner layout ── */
     .mega-inner {
         display: block;
         padding: 0;
     }
 
     .mega-section {
-        padding: var(--space-md) var(--space-lg);
+        padding: 10px 20px 10px 28px;
         border-bottom: 1px solid var(--color-hairline);
     }
 
     .mega-section-head {
-        margin-bottom: var(--space-sm);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 6px;
         padding-bottom: 0;
         border-bottom: none;
     }
 
     .mega-section-head svg {
-        width: 16px;
-        height: 16px;
+        width: 13px;
+        height: 13px;
+        flex-shrink: 0;
     }
 
     .mega-section-head h4 {
-        font-size: var(--font-body-sm);
+        font-size: 11px !important;
+        letter-spacing: 0.12em;
+        text-transform: uppercase !important;
+        color: var(--color-primary);
+        font-weight: 700;
     }
 
     .mega-section a {
-        display: block;
-        padding: var(--space-xs) 0;
+        display: flex;
+        align-items: center;
+        padding: 7px 0;
         margin: 0;
+        min-height: 36px;
         border-radius: 0;
+        background: transparent;
         transform: none !important;
     }
 
     .mega-section a:hover {
         background: transparent;
+        transform: none !important;
     }
 
+    .mega-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--color-charcoal);
+        text-transform: none;
+        letter-spacing: 0;
+    }
+
+    /* Hide descriptions for compact mobile view */
+    .mega-desc {
+        display: none;
+    }
+
+    /* Hide CTA and view-all columns */
     .mega-cta,
     .mega-view-all {
         display: none;
@@ -4020,4 +4120,36 @@ footer svg {
     .glass { background: rgba(255, 255, 255, 0.92); }
     .glass-dark { background: rgba(0, 0, 0, 0.85); }
 }
+}
+
+/* ============================================
+   MOBILE NAV — Final-priority overrides
+   (Must come after typography layer to win cascade)
+============================================ */
+@media (max-width: 1023px) {
+    /* Ensure mobile drawer links are legible, not 13px uppercase Oswald */
+    .nav-links a,
+    .nav-links .mega-link {
+        font-size: 16px !important;
+        text-transform: none !important;
+        letter-spacing: 0.02em !important;
+        font-family: var(--font-primary) !important;
+        font-weight: 600 !important;
+    }
+
+    /* Submenu titles inside mobile drawer */
+    .nav-links .mega-title {
+        font-size: 14px !important;
+        text-transform: none !important;
+        letter-spacing: 0 !important;
+        font-family: var(--font-primary) !important;
+        font-weight: 600 !important;
+    }
+
+    /* Category labels inside submenu stay uppercase and small */
+    .nav-links .mega-section-head h4 {
+        font-size: 11px !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.12em !important;
+    }
 }
