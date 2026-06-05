@@ -4283,4 +4283,18 @@ footer svg {
         font-family: var(--font-primary) !important;
         text-transform: none !important;
     }
+
+    /* ── CRITICAL: Remove backdrop-filter from .nav on mobile ──
+       backdrop-filter turns .nav into a "containing block" for
+       position:fixed descendants (CSS spec). Without this fix,
+       .nav-drawer and .nav-backdrop are constrained to the 60px
+       nav bar instead of the full viewport, making the drawer invisible.
+       These !important rules beat the glass-morphism layer later in the file. ── */
+    .nav,
+    .nav.scrolled {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        background-color: rgba(255, 255, 255, 0.97) !important;
+        border-bottom: 1px solid var(--color-hairline) !important;
+    }
 }
