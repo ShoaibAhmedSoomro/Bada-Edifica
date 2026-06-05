@@ -41,6 +41,20 @@ const translations = {
                 cta: 'Seguridad',
                 cta2: 'Cotizar'
             },
+            slide5: {
+                label: 'Reformas y Construcción',
+                title: 'Reformas<br>Profesionales',
+                desc: 'Transformamos espacios con materiales de calidad y acabados impecables.',
+                cta: 'Ver Servicios',
+                cta2: 'Cotizar Gratis'
+            },
+            slide6: {
+                label: 'Equipo Profesional',
+                title: 'Un Solo<br>Equipo',
+                desc: 'Fontanería, electricidad, construcción y más — gestionado por un equipo unificado.',
+                cta: 'Sobre Nosotros',
+                cta2: 'Contáctenos'
+            },
             scroll: 'Desliza'
         },
         stats: {
@@ -287,6 +301,7 @@ const translations = {
             electricalUpgrade: 'Cuadros Eléctricos',
             electricalUpgradeDesc: 'Actualización de cuadros',
             construction: 'Construcción',
+            constructionNew: 'Nueva Construcción',
             constructionDesc: 'Obras nuevas, Reformas General',
             renovation: 'Reformas',
             renovationDesc: 'Remodelaciones y reformas',
@@ -295,9 +310,12 @@ const translations = {
             fireDetectionDesc: 'Detectores de humo y calor',
             fireSuppression: 'Sistemas de Extinción',
             fireSuppressionDesc: 'Rociadores y extinción',
+            cleanliness: 'Limpieza Post-Obra',
+            cleanlinessDesc: 'Eliminación de residuos',
             needHelp: '¿Necesita Ayuda?',
             needHelpDesc: 'Contáctenos para una consulta gratuita',
-            getQuote: 'Cotizar'
+            getQuote: 'Cotizar',
+            viewAll: 'Ver Todos los Servicios →'
         }
     },
 
@@ -339,6 +357,20 @@ const translations = {
                 desc: 'Fully certified fire detection and suppression systems.',
                 cta: 'Safety',
                 cta2: 'Get Quote'
+            },
+            slide5: {
+                label: 'Renovations & Construction',
+                title: 'Professional<br>Renovations',
+                desc: 'We transform spaces with quality materials and impeccable finishes.',
+                cta: 'View Services',
+                cta2: 'Get Free Quote'
+            },
+            slide6: {
+                label: 'Professional Team',
+                title: 'One Unified<br>Team',
+                desc: 'Plumbing, electrical, construction and more — managed by one unified team.',
+                cta: 'About Us',
+                cta2: 'Contact Us'
             },
             scroll: 'Scroll'
         },
@@ -586,6 +618,7 @@ const translations = {
             electricalUpgrade: 'Electrical Panels',
             electricalUpgradeDesc: 'Panel upgrades',
             construction: 'Construction',
+            constructionNew: 'New Construction',
             constructionDesc: 'New builds, General Renovations',
             renovation: 'Renovations',
             renovationDesc: 'Remodels and refurbishments',
@@ -594,9 +627,12 @@ const translations = {
             fireDetectionDesc: 'Smoke and heat detectors',
             fireSuppression: 'Suppression Systems',
             fireSuppressionDesc: 'Sprinklers and extinguishing',
+            cleanliness: 'Post-Construction Cleaning',
+            cleanlinessDesc: 'Waste removal and site cleaning',
             needHelp: 'Need Help?',
             needHelpDesc: 'Contact us for a free consultation',
-            getQuote: 'Get Quote'
+            getQuote: 'Get Quote',
+            viewAll: 'View All Services →'
         }
     }
 };

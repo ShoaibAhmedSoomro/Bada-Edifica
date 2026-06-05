@@ -119,7 +119,8 @@ function initCounterAnimation() {
 }
 
 function animateCounter(el) {
-    const target = parseInt(el.dataset.count);
+    const target = parseInt(el.dataset.count, 10);
+    if (isNaN(target) || target <= 0) return;
     const duration = 2000;
     const step = target / (duration / 16);
     let current = 0;
@@ -245,7 +246,9 @@ function initMegaMenu() {
     const hasMega = document.querySelector('.has-mega');
     if (!hasMega) return;
 
-    hasMega.querySelector('.mega-link').addEventListener('click', function(e) {
+    const megaLink = hasMega.querySelector('.mega-link');
+    if (!megaLink) return;
+    megaLink.addEventListener('click', function(e) {
         if (window.innerWidth <= 1023) {
             e.preventDefault();
             hasMega.classList.toggle('active');
@@ -267,12 +270,13 @@ function initContactForm() {
     form.addEventListener('submit', function(e) {
         e.preventDefault();
         const btn = form.querySelector('.btn');
-        const originalText = btn.textContent;
-        btn.textContent = '✓ Enviado';
+        if (!btn) return;
+        const originalHTML = btn.innerHTML;
+        btn.innerHTML = '✓ Enviado';
         btn.style.pointerEvents = 'none';
         btn.style.opacity = '0.7';
         setTimeout(() => {
-            btn.textContent = originalText;
+            btn.innerHTML = originalHTML;
             btn.style.pointerEvents = '';
             btn.style.opacity = '';
             form.reset();
