@@ -893,9 +893,9 @@ button {
         display: none !important;
     }
 
-    /* Hide CTA in nav bar on mobile */
+    /* Hide CTA in nav bar on mobile — !important beats .btn{display:flex} */
     .nav-cta {
-        display: none;
+        display: none !important;
     }
 
     /* Show hamburger */
@@ -965,6 +965,7 @@ button {
     }
 
     .drawer-logo-img {
+        display: block !important;  /* base CSS sets display:none for all drawer-* */
         height: 30px;
         width: auto;
     }
@@ -3719,7 +3720,14 @@ a, button, .btn, .dot, .slider-arrow {
     }
 
     /* Hero text wrap fix */
-    .slide-title br { display: none; }
+    /* Replace <br> with a space so words don't merge */
+    .slide-title br {
+        display: inline;
+        content: ' ';
+    }
+    .slide-title br::after {
+        content: ' ';
+    }
 }
 
 /* Small mobile */
