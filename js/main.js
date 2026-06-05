@@ -18,91 +18,81 @@ document.addEventListener('DOMContentLoaded', () => {
     initCardTilt();
 });
 
-/* ── Mobile Menu — body-level right-side drawer ──
-   #navDrawer and #navBackdrop are siblings of <nav> in the DOM,
-   so backdrop-filter on .nav cannot create a containing block for them. */
-function initMobileMenu() {
-    const menuToggle  = document.getElementById('menuToggle');
-    const navDrawer   = document.getElementById('navDrawer');
-    const drawerClose = document.getElementById('drawerClose');
-    const backdrop    = document.getElementById('navBackdrop');
 
-    if (!menuToggle || !navDrawer) return;
+
+
+
+
+
+/* ── Mobile Menu ── */
+function initMobileMenu() {
+    const toggle   = document.getElementById('menuToggle');
+    const drawer   = document.getElementById('navDrawer');
+    const overlay  = document.getElementById('navBackdrop');
+    const closeBtn = document.getElementById('drawerClose');
+
+    if (!toggle || !drawer) return;
 
     function openMenu() {
-        navDrawer.classList.add('active');
-        navDrawer.setAttribute('aria-hidden', 'false');
-        if (backdrop) backdrop.classList.add('active');
+        drawer.classList.add('active');
+        drawer.setAttribute('aria-hidden', 'false');
+        if (overlay) overlay.classList.add('active');
         document.body.style.overflow = 'hidden';
-        menuToggle.setAttribute('aria-expanded', 'true');
-        const svg = menuToggle.querySelector('svg');
-        if (svg) svg.innerHTML = `
-            <line x1="18" y1="6" x2="6" y2="18"/>
-            <line x1="6" y1="6" x2="18" y2="18"/>
-        `;
+        toggle.setAttribute('aria-expanded', 'true');
+        const svg = toggle.querySelector('svg');
+        if (svg) svg.innerHTML =
+            '<line x1="18" y1="6" x2="6" y2="18"/>' +
+            '<line x1="6" y1="6" x2="18" y2="18"/>';
     }
 
     function closeMenu() {
-        navDrawer.classList.remove('active');
-        navDrawer.setAttribute('aria-hidden', 'true');
-        if (backdrop) backdrop.classList.remove('active');
+        drawer.classList.remove('active');
+        drawer.setAttribute('aria-hidden', 'true');
+        if (overlay) overlay.classList.remove('active');
         document.body.style.overflow = '';
-        menuToggle.setAttribute('aria-expanded', 'false');
-        const svg = menuToggle.querySelector('svg');
-        if (svg) svg.innerHTML = `
-            <line x1="3" y1="6" x2="21" y2="6"/>
-            <line x1="3" y1="12" x2="21" y2="12"/>
-            <line x1="3" y1="18" x2="21" y2="18"/>
-        `;
+        toggle.setAttribute('aria-expanded', 'false');
+        const svg = toggle.querySelector('svg');
+        if (svg) svg.innerHTML =
+            '<line x1="3" y1="6" x2="21" y2="6"/>' +
+            '<line x1="3" y1="12" x2="21" y2="12"/>' +
+            '<line x1="3" y1="18" x2="21" y2="18"/>';
     }
 
-    menuToggle.addEventListener('click', () => {
-        navDrawer.classList.contains('active') ? closeMenu() : openMenu();
-    });
+    toggle.addEventListener('click',  () => drawer.classList.contains('active') ? closeMenu() : openMenu());
+    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+    if (overlay)  overlay.addEventListener('click',  closeMenu);
 
-    if (drawerClose) drawerClose.addEventListener('click', closeMenu);
-    if (backdrop)    backdrop.addEventListener('click', closeMenu);
+    // Close on any drawer link click
+    drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
 
-    // Close drawer when any drawer link (not submenu toggle) is tapped
-    navDrawer.querySelectorAll('.drawer-links a').forEach(link => {
-        link.addEventListener('click', closeMenu);
+    // Escape key
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && drawer.classList.contains('active')) closeMenu();
     });
 }
 
-/* ── Drawer Services sub-accordion ── */
+/* ── Drawer Services Accordion ── */
 function initDrawerSubmenu() {
     document.querySelectorAll('.drawer-sub-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            const parent = btn.closest('.drawer-has-sub');
-            if (!parent) return;
-            const isOpen = parent.classList.contains('open');
-            // Close all other open sub-menus
-            document.querySelectorAll('.drawer-has-sub.open').forEach(el => {
-                el.classList.remove('open');
-                const b = el.querySelector('.drawer-sub-btn');
-                if (b) b.setAttribute('aria-expanded', 'false');
-            });
-            // Toggle this one
-            if (!isOpen) {
-                parent.classList.add('open');
-                btn.setAttribute('aria-expanded', 'true');
-            }
+            const li = btn.closest('.drawer-has-sub');
+            if (!li) return;
+            const isOpen = li.classList.contains('open');
+            // Close all open submenus first
+            document.querySelectorAll('.drawer-has-sub.open').forEach(el => el.classList.remove('open'));
+            if (!isOpen) li.classList.add('open');
         });
     });
 }
 
-/* ── Mark the active page link in the drawer ── */
+/* ── Mark active page link in drawer ── */
 function initDrawerActiveLinks() {
-    const rawPath = window.location.pathname.replace(/\.html$/, '').replace(/\/$/, '');
-    const path    = rawPath === '' ? '/' : rawPath;
-
-    document.querySelectorAll('.drawer-links > li > a').forEach(link => {
-        const href     = (link.getAttribute('href') || '').split('#')[0].replace(/\/$/, '');
-        const normHref = href === '' ? '/' : href;
-        const match    = normHref === '/'
-            ? path === '/'
-            : path.endsWith('/' + normHref) || path === normHref;
-        if (match) link.classList.add('active');
+    const path = window.location.pathname.replace(/\.html$/, '').replace(/\/$/, '') || '/';
+    document.querySelectorAll('.drawer-links > li > a').forEach(a => {
+        const href = (a.getAttribute('href') || '').split('#')[0];
+        const norm = href === '' ? '/' : href;
+        const match = norm === '/' ? path === '/' : (path === '/' + norm || path.endsWith('/' + norm));
+        if (match) a.classList.add('active');
     });
 }
 
