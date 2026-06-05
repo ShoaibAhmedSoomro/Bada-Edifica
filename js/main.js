@@ -16,33 +16,36 @@ document.addEventListener('DOMContentLoaded', () => {
     initCardTilt();
 });
 
-/* ── Mobile Menu ── */
+/* ── Mobile Menu (right-side drawer) ── */
 function initMobileMenu() {
     const menuToggle = document.getElementById('menuToggle');
-    const navLinks = document.getElementById('navLinks');
-    const backdrop = document.getElementById('navBackdrop');
+    const navDrawer  = document.getElementById('navDrawer');
+    const drawerClose = document.getElementById('drawerClose');
+    const backdrop   = document.getElementById('navBackdrop');
 
-    if (!menuToggle || !navLinks) return;
+    if (!menuToggle || !navDrawer) return;
 
     function openMenu() {
-        navLinks.classList.add('active');
+        navDrawer.classList.add('active');
+        navDrawer.setAttribute('aria-hidden', 'false');
         if (backdrop) backdrop.classList.add('active');
         document.body.style.overflow = 'hidden';
         menuToggle.setAttribute('aria-expanded', 'true');
         const svg = menuToggle.querySelector('svg');
-        svg.innerHTML = `
+        if (svg) svg.innerHTML = `
             <line x1="18" y1="6" x2="6" y2="18"/>
             <line x1="6" y1="6" x2="18" y2="18"/>
         `;
     }
 
     function closeMenu() {
-        navLinks.classList.remove('active');
+        navDrawer.classList.remove('active');
+        navDrawer.setAttribute('aria-hidden', 'true');
         if (backdrop) backdrop.classList.remove('active');
         document.body.style.overflow = '';
         menuToggle.setAttribute('aria-expanded', 'false');
         const svg = menuToggle.querySelector('svg');
-        svg.innerHTML = `
+        if (svg) svg.innerHTML = `
             <line x1="3" y1="6" x2="21" y2="6"/>
             <line x1="3" y1="12" x2="21" y2="12"/>
             <line x1="3" y1="18" x2="21" y2="18"/>
@@ -50,20 +53,30 @@ function initMobileMenu() {
     }
 
     menuToggle.addEventListener('click', () => {
-        if (navLinks.classList.contains('active')) {
+        if (navDrawer.classList.contains('active')) {
             closeMenu();
         } else {
             openMenu();
         }
     });
 
+    // Close button inside the drawer
+    if (drawerClose) {
+        drawerClose.addEventListener('click', closeMenu);
+    }
+
+    // Backdrop click closes the drawer
     if (backdrop) {
         backdrop.addEventListener('click', closeMenu);
     }
 
-    navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', closeMenu);
-    });
+    // Close when any nav link (non-mega) is tapped
+    const navLinks = document.getElementById('navLinks');
+    if (navLinks) {
+        navLinks.querySelectorAll('a:not(.mega-link)').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+    }
 }
 
 /* ── Scroll Reveal Animations ── */
@@ -289,8 +302,8 @@ function initEscapeHandler() {
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             const menuToggle = document.getElementById('menuToggle');
-            const navLinks = document.getElementById('navLinks');
-            if (navLinks && navLinks.classList.contains('active')) {
+            const navDrawer  = document.getElementById('navDrawer');
+            if (navDrawer && navDrawer.classList.contains('active')) {
                 menuToggle.click();
             }
             const hasMega = document.querySelector('.has-mega');
